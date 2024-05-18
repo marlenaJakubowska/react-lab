@@ -4,28 +4,37 @@ import {useState} from "react";
 
 function App() {
     const [email, setEmail] = useState('adres@email.pl');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     function handleChange(event) {
         setEmail(event.target.value);
     }
 
-    let message;
-    if (email.length < 10) {
-        message = <div>Hello shorty!</div>;
-    } else if (email.length < 15) {
-        message = <div>You're a charm</div>;
-    } else {
-        message = <div>I feel asleep reading that</div>;
+    function handleLogout() {
+        setIsLoggedIn(false);
+        setEmail('');
     }
 
-    return (
-        <div>
-            <h1>System do zapisów na zajęcia</h1>
-            <h2>Twój e-mail to {email}.</h2>
-            {message}
-            <input type="text" value={email} onChange={handleChange}/>
-        </div>
-    );
+    if (isLoggedIn) {
+        return (
+            <div>
+                <h1>Witaj w systemie zapisów na zajęcia</h1>
+                <h2>Witaj {email}</h2>
+                <button onClick={handleLogout}>Wyloguj</button>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <h1>Witaj w systemie zapisów na zajęcia</h1>
+                <label>Zaloguj się emailem</label>
+                <input type="text" value={email} onChange={handleChange} />
+                <button type="button" onClick={() => setIsLoggedIn(true)}>
+                    Wchodzę
+                </button>
+            </div>
+        );
+    }
 }
 
 export default App;
