@@ -6,32 +6,25 @@ import LoginForm from "./LoginForm";
 import UserPanel from "./UserPanel";
 import MeetingsPage from "./meetings/MeetingsPage";
 
-
 function App() {
-    const [email, setEmail] = useState('adres@email.pl');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    function handleLogin(email) {
-        setIsLoggedIn(true);
-        setEmail(email);
-    }
+    const [authenticatedUserName, setAuthenticatedUsername] = useState("")
 
     function handleLogout() {
-        setIsLoggedIn(false);
-        setEmail('');
+        setAuthenticatedUsername("");
     }
 
     return (
         <div>
             <h1>System do zapisów na zajęcia</h1>
-            {isLoggedIn ? (
+            {authenticatedUserName ? (
                 <div>
-                    <UserPanel username={email} onLogout={handleLogout} />
+                    <UserPanel username={authenticatedUserName} onLogout={handleLogout} />
                     <h1>Zajęcia</h1>
                     <MeetingsPage />
                 </div>
             ) : (
-                <LoginForm onLogin={handleLogin} />
+                <LoginForm onLogin={(email) => setAuthenticatedUsername(email)} />
+
             )}
         </div>
     );
