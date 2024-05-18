@@ -1,4 +1,8 @@
 export default function MeetingsList({meetings}) {
+
+    if (meetings.length === 0) {
+        return null;
+    }
     return (
         <table>
             <thead>
